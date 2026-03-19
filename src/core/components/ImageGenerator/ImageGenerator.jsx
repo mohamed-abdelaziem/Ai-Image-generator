@@ -41,7 +41,7 @@ export default function ImageGenerator() {
 
   async function getImage() {
     setIsLoading(true);
-    setTimeout(async () => {
+    const timeOutId = setTimeout(async () => {
       const getImageById = await fetch(
         `https://aihorde.net/api/v2/generate/status/${imageId}`,
         { method: "GET" },
@@ -49,15 +49,23 @@ export default function ImageGenerator() {
       console.log(getImageById);
       if (getImageById.ok) {
         const responseOfgetImageById = await getImageById.json();
-        console.log(responseOfgetImageById);
-        setImage(responseOfgetImageById?.generations[0]?.img);
-        setIsLoading(false);
+        if (responseOfgetImageById?.generations.length == 0) {
+          setImage(defaultImage);
+          setIsLoading(true);
+        } else {
+          setImage(responseOfgetImageById?.generations[0]?.img);
+          setIsLoading(false);
+        }
       } else {
         setIsLoading(false);
         setImage(defaultImage);
         setErrorAlert(true);
       }
-    }, 10000);
+    }, 20000);
+
+    if (image !== "/") {
+      clearInterval(intervalId);
+    }
   }
 
   function closeAlert() {
@@ -81,9 +89,11 @@ export default function ImageGenerator() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 2, duration: 1, type: "tween" }}
           className="image-box">
-          <motion.img drag="x" 
-          dragConstraints={{left:0,right:0}}
-          src={image == "/" ? defaultImage : image} />
+          <motion.img
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            src={image == "/" ? defaultImage : image}
+          />
           <div className="image-loading">
             <div
               className={
@@ -117,22 +127,23 @@ export default function ImageGenerator() {
           ""
         )}
 
-        <motion.div 
-        
-         initial={{ opacity: 0}}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 3, duration: 1, type: "tween" }}
-        className="image-search-box">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 3, duration: 1, type: "tween" }}
+          className="image-search-box">
           <motion.input
-            whileFocus={{scale:1}}
+            whileFocus={{ scale: 1 }}
             ref={element}
             type="text"
             placeholder="Describe What You Want...."
           />
           <motion.button
-          whileTap={{scale:0.5}}
-          transition={{duration:0.5,type:'tween'}}
-          onClick={() => createImage()}>Generate</motion.button>
+            whileTap={{ scale: 0.5 }}
+            transition={{ duration: 0.5, type: "tween" }}
+            onClick={() => createImage()}>
+            Generate
+          </motion.button>
         </motion.div>
       </div>
     </>
