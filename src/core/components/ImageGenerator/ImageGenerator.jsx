@@ -36,6 +36,7 @@ export default function ImageGenerator() {
 
     const data = await response.json();
     imageId = data.id;
+    element.current.value='';
     getImage();
   }
 
@@ -51,7 +52,8 @@ export default function ImageGenerator() {
         const responseOfgetImageById = await getImageById.json();
         if (responseOfgetImageById?.generations.length == 0) {
           setImage(defaultImage);
-          setIsLoading(true);
+          setIsLoading(false);
+          setErrorAlert(true);
         } else {
           setImage(responseOfgetImageById?.generations[0]?.img);
           setIsLoading(false);
@@ -63,9 +65,7 @@ export default function ImageGenerator() {
       }
     }, 20000);
 
-    if (image !== "/") {
-      clearInterval(intervalId);
-    }
+   
   }
 
   function closeAlert() {
@@ -79,7 +79,7 @@ export default function ImageGenerator() {
           <motion.h1
             initial={{ opacity: 0, y: -200 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 1, type: "spring" }}>
+            transition={{ delay: 1, duration: 1, type: "tween" }}>
             Ai Image <span>Generator</span>
           </motion.h1>
         </div>
@@ -140,9 +140,14 @@ export default function ImageGenerator() {
           />
           <motion.button
             whileTap={{ scale: 0.5 }}
+            disabled={isLoading}
             transition={{ duration: 0.5, type: "tween" }}
             onClick={() => createImage()}>
-            Generate
+            {
+                isLoading ? ('loading...'):('Generate')
+
+
+            }
           </motion.button>
         </motion.div>
       </div>
