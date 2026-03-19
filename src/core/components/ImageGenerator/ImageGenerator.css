@@ -1,0 +1,177 @@
+.container {
+display: flex;
+flex-direction: column;
+gap: 30px;
+align-items: center;
+justify-content: center;
+margin-block: 80px;
+}
+
+
+
+.container .header h1 {
+font-size:70px;
+font-weight: bold;
+}
+
+
+.container .header h1 span {
+color: #de1b89;
+}
+
+.container .image-box img {
+width: 512px;
+object-fit: cover;
+height: 512px;
+cursor: pointer;
+}
+
+
+.container .image-search-box {
+padding: 10px; 
+width: 50%;
+margin-inline:  auto;
+border-radius: 50px;
+background-color: #1f3540;
+display: flex;
+align-items: center;
+justify-content: space-around;
+}
+
+.container .image-search-box input {
+border: none;
+outline: none;
+background-color: transparent;
+display: block;
+width: 80%;
+padding-left: 30px;
+accent-color: white !important;
+color: white;
+}
+
+.container .image-search-box button {
+padding: 15px 30px;
+border-radius: 50px;
+outline: none;
+border: none;
+font-weight:600;
+transition: all 1s linear;
+background-color: #de1b89;
+cursor: pointer;
+color: white;
+}
+
+
+.loading-hidden {
+width: 0;
+}
+
+.loading-bar-full {
+width: 512px;
+background-color: #de1b89;
+height: 5px;
+transition: 10s linear width;
+}
+
+
+.loading-text-visiable {
+display: block;
+}
+
+
+.loading-text-hidden {
+display: none;
+transition: 10s linear display;
+}
+
+
+@media screen and (max-width : 768px){
+.container .header h1 {
+font-size:30px;
+font-weight: bold;
+}
+
+.container .image-box img {
+width: 90%;
+margin: auto;
+display: block;
+}
+
+.container .image-box .image-loading {
+width: 90%;
+margin: auto;
+}
+
+
+.loading-bar-full{
+width: 90%;
+}
+
+.container .image-search-box {
+width: 90%;
+padding: 10px;
+margin-inline: auto;
+}
+}
+
+
+
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff0f0;
+  border-left: 5px solid #ff3b3b;
+  color: #7a0000;
+  padding: 14px 16px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+  animation: fadeSlide 0.3s ease;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.error-icon {
+  font-size: 22px;
+}
+
+.error-content h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.error-content p {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+
+.error-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #7a0000;
+  transition: 0.2s;
+}
+
+.error-close:hover {
+  color: #ff0000;
+  transform: scale(1.2);
+}
+
+/* Animation */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
